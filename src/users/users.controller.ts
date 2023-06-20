@@ -1,6 +1,7 @@
 import { Controller, Post, Body, ValidationPipe, Get, Param } from '@nestjs/common'; // Import the necessary decorators
 import { UserService } from './users.service';
 import { UserLoginDto } from './dto/user-login.dto';
+import { Cron } from '@nestjs/schedule';
 
 @Controller('users')
 export class UsersController {
@@ -23,5 +24,10 @@ export class UsersController {
   @Get()
   async getUsers() {
     return this.userService.getUsers();
+  }
+
+  @Cron('5 * * * * *')
+  handleCron() {
+    console.log('Called when the current second is 5');
   }
 }

@@ -6,6 +6,7 @@ import { UsersModule } from './users/users.module';
 import { LogsModule } from './logs/logs.module';
 import { ConfigModule } from '@nestjs/config';
 import { CacheModule } from '@nestjs/cache-manager';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [ConfigModule.forRoot(),
@@ -13,7 +14,7 @@ import { CacheModule } from '@nestjs/cache-manager';
       useFactory: () => ({
         uri: process.env.MONGODB_CONNECTION_STRING,
       }),
-    }), UsersModule, LogsModule, CacheModule.register()],
+    }), UsersModule, LogsModule, CacheModule.register() , ScheduleModule.forRoot()],
   controllers: [AppController],
   providers: [AppService],
 })
