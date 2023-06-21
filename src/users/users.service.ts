@@ -7,11 +7,13 @@ import { UserLoginDto } from './dto/user-login.dto';
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import { logger } from '../logger';
+import { HttpService } from '@nestjs/axios';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+    private readonly httpService: HttpService
   ) {}
 
   async login(userLoginDto: UserLoginDto) {
@@ -39,9 +41,6 @@ export class UserService {
     if (!user) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
-    // setInterval(() => {
-    //   console.log("Here !!" , user)
-    // }, 2000);
     return user;
   }
   // async getUserById(id: string) {
@@ -60,6 +59,9 @@ export class UserService {
         throw new HttpException('User not found', HttpStatus.NOT_FOUND);
       }
       return user;
+      // const response = await this.httpService.axiosRef.get('https://google.com');
+      // const responseData = response.data;
+      // return responseData;
     }
   
 }
